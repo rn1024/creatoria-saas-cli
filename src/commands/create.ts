@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import ora from 'ora';
 import Handlebars from 'handlebars';
 import { promisify } from 'util';
@@ -47,7 +47,14 @@ async function createProject(projectName: string, options: any) {
 
     // Copy template files
     spinner.start('Copying template files...');
-    fs.copySync(templateDir, targetDir, { overwrite: true });
+    fs.copySync(templateDir, targetDir, {
+      overwrite: true,
+      filter: (src) => {
+        // Exclude node_modules, .git, dist, and other build artifacts
+        const relativePath = path.relative(templateDir, src);
+        return !relativePath.match(/^(node_modules|\.git|dist|coverage|\.next|\.nuxt)(\/|$)/);
+      }
+    });
     spinner.succeed('Template files copied');
 
     // Process Handlebars templates

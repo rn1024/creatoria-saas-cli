@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 
 export const configCommand = new Command('config')
   .description('Manage project configuration');

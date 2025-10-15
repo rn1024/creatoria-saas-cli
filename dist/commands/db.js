@@ -32,10 +32,13 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbCommand = void 0;
 const commander_1 = require("commander");
-const chalk = __importStar(require("chalk"));
+const chalk_1 = __importDefault(require("chalk"));
 const util_1 = require("util");
 const child_process_1 = require("child_process");
 const path = __importStar(require("path"));
@@ -53,35 +56,35 @@ exports.dbCommand
     .action(seedDatabase);
 async function runMigrations() {
     try {
-        console.log(chalk.cyan('\nRunning database migrations...\n'));
+        console.log(chalk_1.default.cyan('\nRunning database migrations...\n'));
         const packageJsonPath = path.join(process.cwd(), 'package.json');
         if (!fs.existsSync(packageJsonPath)) {
-            console.error(chalk.red('Not in a Creatoria project directory'));
+            console.error(chalk_1.default.red('Not in a Creatoria project directory'));
             process.exit(1);
         }
         // Run TypeORM migrations
         await execAsync('npm run migration:run', { cwd: process.cwd() });
-        console.log(chalk.green('✓ Migrations completed\n'));
+        console.log(chalk_1.default.green('✓ Migrations completed\n'));
     }
     catch (error) {
-        console.error(chalk.red('Migration failed:'), error.message);
+        console.error(chalk_1.default.red('Migration failed:'), error.message);
         process.exit(1);
     }
 }
 async function seedDatabase() {
     try {
-        console.log(chalk.cyan('\nSeeding database...\n'));
+        console.log(chalk_1.default.cyan('\nSeeding database...\n'));
         const packageJsonPath = path.join(process.cwd(), 'package.json');
         if (!fs.existsSync(packageJsonPath)) {
-            console.error(chalk.red('Not in a Creatoria project directory'));
+            console.error(chalk_1.default.red('Not in a Creatoria project directory'));
             process.exit(1);
         }
         // Run seed script
         await execAsync('npm run seed', { cwd: process.cwd() });
-        console.log(chalk.green('✓ Database seeded\n'));
+        console.log(chalk_1.default.green('✓ Database seeded\n'));
     }
     catch (error) {
-        console.error(chalk.red('Seeding failed:'), error.message);
+        console.error(chalk_1.default.red('Seeding failed:'), error.message);
         process.exit(1);
     }
 }

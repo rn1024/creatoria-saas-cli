@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { promisify } from 'util';
 import { exec } from 'child_process';
 import * as path from 'path';

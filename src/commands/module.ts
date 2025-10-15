@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 
 export const moduleCommand = new Command('module')
   .description('Manage project modules');

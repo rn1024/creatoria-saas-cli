@@ -40,7 +40,7 @@ exports.createCommand = void 0;
 const commander_1 = require("commander");
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs-extra"));
-const chalk = __importStar(require("chalk"));
+const chalk_1 = __importDefault(require("chalk"));
 const ora_1 = __importDefault(require("ora"));
 const handlebars_1 = __importDefault(require("handlebars"));
 const util_1 = require("util");
@@ -59,7 +59,7 @@ exports.createCommand = new commander_1.Command('create')
         await createProject(projectName, options);
     }
     catch (error) {
-        console.error(chalk.red('✗ Error:'), error.message);
+        console.error(chalk_1.default.red('✗ Error:'), error.message);
         process.exit(1);
     }
 });
@@ -79,7 +79,14 @@ async function createProject(projectName, options) {
         spinner.succeed(`Using template from: ${templateDir}`);
         // Copy template files
         spinner.start('Copying template files...');
-        fs.copySync(templateDir, targetDir, { overwrite: true });
+        fs.copySync(templateDir, targetDir, {
+            overwrite: true,
+            filter: (src) => {
+                // Exclude node_modules, .git, dist, and other build artifacts
+                const relativePath = path.relative(templateDir, src);
+                return !relativePath.match(/^(node_modules|\.git|dist|coverage|\.next|\.nuxt)(\/|$)/);
+            }
+        });
         spinner.succeed('Template files copied');
         // Process Handlebars templates
         spinner.start('Processing templates...');
@@ -105,10 +112,10 @@ async function createProject(projectName, options) {
             }
         }
         // Success message
-        console.log(chalk.green('\n✨ Project created successfully!\n'));
-        console.log(chalk.cyan('Next steps:'));
-        console.log(chalk.gray(`  cd ${projectName}`));
-        console.log(chalk.gray('  npm run start:dev\n'));
+        console.log(chalk_1.default.green('\n✨ Project created successfully!\n'));
+        console.log(chalk_1.default.cyan('Next steps:'));
+        console.log(chalk_1.default.gray(`  cd ${projectName}`));
+        console.log(chalk_1.default.gray('  npm run start:dev\n'));
     }
     catch (error) {
         spinner.fail('Project creation failed');

@@ -32,12 +32,15 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.configCommand = void 0;
 const commander_1 = require("commander");
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs-extra"));
-const chalk = __importStar(require("chalk"));
+const chalk_1 = __importDefault(require("chalk"));
 exports.configCommand = new commander_1.Command('config')
     .description('Manage project configuration');
 exports.configCommand
@@ -48,30 +51,30 @@ async function showConfig() {
     try {
         const packageJsonPath = path.join(process.cwd(), 'package.json');
         if (!fs.existsSync(packageJsonPath)) {
-            console.error(chalk.red('Not in a Creatoria project directory'));
+            console.error(chalk_1.default.red('Not in a Creatoria project directory'));
             process.exit(1);
         }
         const packageJson = fs.readJsonSync(packageJsonPath);
         const envPath = path.join(process.cwd(), '.env');
-        console.log(chalk.cyan('\n=== Project Configuration ===\n'));
-        console.log(chalk.blue('Project Name:'), packageJson.name);
-        console.log(chalk.blue('Version:'), packageJson.version);
-        console.log(chalk.blue('Description:'), packageJson.description || 'N/A');
+        console.log(chalk_1.default.cyan('\n=== Project Configuration ===\n'));
+        console.log(chalk_1.default.blue('Project Name:'), packageJson.name);
+        console.log(chalk_1.default.blue('Version:'), packageJson.version);
+        console.log(chalk_1.default.blue('Description:'), packageJson.description || 'N/A');
         if (fs.existsSync(envPath)) {
             const envContent = fs.readFileSync(envPath, 'utf-8');
             const envVars = envContent.split('\n').filter(line => line && !line.startsWith('#'));
-            console.log(chalk.cyan('\n=== Environment Variables ===\n'));
+            console.log(chalk_1.default.cyan('\n=== Environment Variables ===\n'));
             envVars.forEach(line => {
                 const [key] = line.split('=');
                 if (key) {
-                    console.log(chalk.gray(`  ${key}`));
+                    console.log(chalk_1.default.gray(`  ${key}`));
                 }
             });
         }
         console.log('');
     }
     catch (error) {
-        console.error(chalk.red('Error showing config:'), error.message);
+        console.error(chalk_1.default.red('Error showing config:'), error.message);
         process.exit(1);
     }
 }

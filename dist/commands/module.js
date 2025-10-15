@@ -32,12 +32,15 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.moduleCommand = void 0;
 const commander_1 = require("commander");
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs-extra"));
-const chalk = __importStar(require("chalk"));
+const chalk_1 = __importDefault(require("chalk"));
 exports.moduleCommand = new commander_1.Command('module')
     .description('Manage project modules');
 exports.moduleCommand
@@ -52,7 +55,7 @@ async function listModules() {
     try {
         const modulesDir = path.join(process.cwd(), 'src', 'modules');
         if (!fs.existsSync(modulesDir)) {
-            console.log(chalk.yellow('No modules directory found'));
+            console.log(chalk_1.default.yellow('No modules directory found'));
             return;
         }
         const modules = fs.readdirSync(modulesDir).filter(item => {
@@ -60,27 +63,27 @@ async function listModules() {
             return fs.statSync(itemPath).isDirectory();
         });
         if (modules.length === 0) {
-            console.log(chalk.yellow('No modules found'));
+            console.log(chalk_1.default.yellow('No modules found'));
             return;
         }
-        console.log(chalk.cyan('\nInstalled modules:'));
+        console.log(chalk_1.default.cyan('\nInstalled modules:'));
         modules.forEach(module => {
-            console.log(chalk.green(`  ✓ ${module}`));
+            console.log(chalk_1.default.green(`  ✓ ${module}`));
         });
         console.log('');
     }
     catch (error) {
-        console.error(chalk.red('Error listing modules:'), error.message);
+        console.error(chalk_1.default.red('Error listing modules:'), error.message);
         process.exit(1);
     }
 }
 async function addModule(moduleName) {
     try {
-        console.log(chalk.yellow('\n⚠️  Module generation is not yet implemented in v0.2.0'));
-        console.log(chalk.gray('This feature will be added in a future release\n'));
+        console.log(chalk_1.default.yellow('\n⚠️  Module generation is not yet implemented in v0.2.0'));
+        console.log(chalk_1.default.gray('This feature will be added in a future release\n'));
     }
     catch (error) {
-        console.error(chalk.red('Error adding module:'), error.message);
+        console.error(chalk_1.default.red('Error adding module:'), error.message);
         process.exit(1);
     }
 }
