@@ -1,0 +1,56 @@
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+
+@Injectable()
+export class AuthService {
+  constructor(private jwtService: JwtService) {}
+
+  async validateUser(username: string, password: string): Promise<any> {
+    // 示例：硬编码的测试用户
+    const testUser = {
+      id: '1',
+      username: 'admin',
+      password: await bcrypt.hash('admin123', 10),
+      roles: ['admin'],
+    };
+
+    if (username === testUser.username && await bcrypt.compare(password, testUser.password)) {
+      const { password, ...result } = testUser;
+      return result;
+    }
+    return null;
+  }
+
+  async login(user: any) {
+    const payload = { 
+      username: user.username, 
+      sub: user.id,
+      roles: user.roles 
+    };
+    
+    return {
+      access_token: this.jwtService.sign(payload),
+      user: {
+        id: user.id,
+        username: user.username,
+        roles: user.roles,
+      },
+    };
+  }
+
+  async register(username: string, password: string) {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+    // 实际应用中应该保存到数据库
+    const newUser = {
+      id: Date.now().toString(),
+      username,
+      password: hashedPassword,
+      roles: ['user'],
+    };
+
+    const { password: _, ...result } = newUser;
+    return this.login(result);
+  }
+}

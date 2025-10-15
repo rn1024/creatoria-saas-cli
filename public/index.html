@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creatoria SaaS CLI - 文档中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .card-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Creatoria SaaS CLI</h1>
+            <p>企业级 SaaS 平台开发工具文档中心</p>
+        </div>
+        
+        <div class="cards">
+            <a href="/api-docs" class="card">
+                <div class="card-icon">🔧</div>
+                <h2>API 文档</h2>
+                <p>交互式 Swagger API 文档，支持在线测试和调试</p>
+                <span class="card-badge">Interactive</span>
+            </a>
+            
+            <a href="/docs" class="card">
+                <div class="card-icon">📖</div>
+                <h2>使用文档</h2>
+                <p>完整的用户指南、开发者文档和配置参考</p>
+                <span class="card-badge">Documentation</span>
+            </a>
+            
+            <a href="/docs/QUICK_START.md" class="card">
+                <div class="card-icon">🚀</div>
+                <h2>快速开始</h2>
+                <p>5分钟快速上手，创建你的第一个项目</p>
+                <span class="card-badge">Getting Started</span>
+            </a>
+            
+            <a href="/docs/COMMANDS.md" class="card">
+                <div class="card-icon">⌨️</div>
+                <h2>命令参考</h2>
+                <p>所有 CLI 命令的详细说明和使用示例</p>
+                <span class="card-badge">Reference</span>
+            </a>
+            
+            <a href="/docs/api" class="card">
+                <div class="card-icon">🔌</div>
+                <h2>API 参考</h2>
+                <p>RESTful API 端点、参数和响应格式说明</p>
+                <span class="card-badge">API</span>
+            </a>
+            
+            <a href="https://github.com/creatoria/cli" class="card">
+                <div class="card-icon">💻</div>
+                <h2>源代码</h2>
+                <p>访问 GitHub 仓库，贡献代码或提交问题</p>
+                <span class="card-badge">GitHub</span>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 Creatoria Team | Version 1.0.0</p>
+        </div>
+    </div>
+</body>
+</html>

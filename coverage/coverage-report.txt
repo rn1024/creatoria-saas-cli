@@ -1,0 +1,168 @@
+============================================================
+CREATORIA SAAS CLI - 测试覆盖率报告
+生成时间: 2025/9/8 04:12:17
+============================================================
+
+总体覆盖率:
+----------------------------------------
+lines       : 0.00% (0/4142)
+statements  : 0.00% (0/4263)
+functions   : 0.00% (0/751)
+branches    : 0.00% (0/2229)
+
+文件级别覆盖率:
+----------------------------------------
+
+[app.controller.ts]
+  ✗ 0.0% - src/app.controller.ts
+  平均覆盖率: 0.00%
+
+[app.service.ts]
+  ✗ 0.0% - src/app.service.ts
+  平均覆盖率: 0.00%
+
+[cli]
+  ✗ 0.0% - src/cli/cli-optimized.service.ts
+  ✗ 0.0% - src/cli/cli.service.ts
+  ✗ 0.0% - src/cli/commands/config.command.ts
+  ✗ 0.0% - src/cli/commands/create.command.ts
+  ✗ 0.0% - src/cli/commands/database.command.ts
+  ✗ 0.0% - src/cli/commands/init.command.ts
+  ✗ 0.0% - src/cli/commands/lazy-module-add.command.ts
+  ✗ 0.0% - src/cli/commands/module-add.command.ts
+  ✗ 0.0% - src/cli/commands/module-doctor.command.ts
+  ✗ 0.0% - src/cli/commands/module.command.ts
+  ✗ 0.0% - src/cli/core/command-definitions.ts
+  ✗ 0.0% - src/cli/core/command-registry.ts
+  ✗ 0.0% - src/cli/core/lazy-loader.ts
+  ✗ 0.0% - src/cli/decorators/lazy-command.decorator.ts
+  ✗ 0.0% - src/cli/services/module-manager.service.ts
+  ✗ 0.0% - src/cli/utils/ast-helper.ts
+  ✗ 0.0% - src/cli/utils/dependency-checker.ts
+  平均覆盖率: 0.00%
+
+[common]
+  ✗ 0.0% - src/common/cache/cache.decorator.ts
+  ✗ 0.0% - src/common/cache/cache.service.ts
+  ✗ 0.0% - src/common/cache/strategies/file.strategy.ts
+  ✗ 0.0% - src/common/cache/strategies/memory.strategy.ts
+  ✗ 0.0% - src/common/constants/error-codes.ts
+  ✗ 0.0% - src/common/decorators/catch-errors.decorator.ts
+  ✗ 0.0% - src/common/decorators/logger.decorator.ts
+  ✗ 0.0% - src/common/exceptions/base.exception.ts
+  ✗ 0.0% - src/common/exceptions/cli.exception.ts
+  ✗ 0.0% - src/common/exceptions/module.exception.ts
+  ✗ 0.0% - src/common/filters/cli-exception.filter.ts
+  ✗ 0.0% - src/common/filters/global-exception.filter.ts
+  ✗ 0.0% - src/common/io/file-manager.service.ts
+  ✗ 0.0% - src/common/io/stream-processor.ts
+  ✗ 0.0% - src/common/logger/logger.config.ts
+  ✗ 0.0% - src/common/logger/logger.service.ts
+  ✗ 0.0% - src/common/logger/formatters/cli.formatter.ts
+  ✗ 0.0% - src/common/logger/formatters/json.formatter.ts
+  ✗ 0.0% - src/common/logger/transports/console.transport.ts
+  ✗ 0.0% - src/common/logger/transports/file.transport.ts
+  ✗ 0.0% - src/common/security/command-security.service.ts
+  ✗ 0.0% - src/common/security/data-masking.service.ts
+  ✗ 0.0% - src/common/security/path-security.middleware.ts
+  ✗ 0.0% - src/common/security/path-security.service.ts
+  ✗ 0.0% - src/common/security/secret-manager.service.ts
+  ✗ 0.0% - src/common/security/secure-command.executor.ts
+  ✗ 0.0% - src/common/security/secure-file.service.ts
+  ✗ 0.0% - src/common/security/security.config.ts
+  ✗ 0.0% - src/common/security/sensitive-data.service.ts
+  ✗ 0.0% - src/common/types/error.types.ts
+  ✗ 0.0% - src/common/utils/error-handler.ts
+  ✗ 0.0% - src/common/validation/validation.service.ts
+  ✗ 0.0% - src/common/validation/decorators/validate.decorator.ts
+  ✗ 0.0% - src/common/validation/validators/custom.validator.ts
+  ✗ 0.0% - src/common/validation/validators/number.validator.ts
+  ✗ 0.0% - src/common/validation/validators/path.validator.ts
+  ✗ 0.0% - src/common/validation/validators/string.validator.ts
+  平均覆盖率: 0.00%
+
+[config]
+  ✗ 0.0% - src/config/config.service.ts
+  平均覆盖率: 0.00%
+
+[core]
+  ✗ 0.0% - src/core/module-loader/module-loader.service.ts
+  平均覆盖率: 0.00%
+
+[modules]
+  ✗ 0.0% - src/modules/modules.service.ts
+  平均覆盖率: 0.00%
+
+[performance]
+  ✗ 0.0% - src/performance/performance-monitor.ts
+  ✗ 0.0% - src/performance/startup-optimizer.ts
+  平均覆盖率: 0.00%
+
+============================================================
+
+优化建议:
+----------------------------------------
+以下文件覆盖率低于50%，建议增加测试:
+  - src/app.controller.ts
+  - src/app.service.ts
+  - src/cli/cli-optimized.service.ts
+  - src/cli/cli.service.ts
+  - src/cli/commands/config.command.ts
+  - src/cli/commands/create.command.ts
+  - src/cli/commands/database.command.ts
+  - src/cli/commands/init.command.ts
+  - src/cli/commands/lazy-module-add.command.ts
+  - src/cli/commands/module-add.command.ts
+  - src/cli/commands/module-doctor.command.ts
+  - src/cli/commands/module.command.ts
+  - src/cli/core/command-definitions.ts
+  - src/cli/core/command-registry.ts
+  - src/cli/core/lazy-loader.ts
+  - src/cli/decorators/lazy-command.decorator.ts
+  - src/cli/services/module-manager.service.ts
+  - src/cli/utils/ast-helper.ts
+  - src/cli/utils/dependency-checker.ts
+  - src/common/cache/cache.decorator.ts
+  - src/common/cache/cache.service.ts
+  - src/common/cache/strategies/file.strategy.ts
+  - src/common/cache/strategies/memory.strategy.ts
+  - src/common/constants/error-codes.ts
+  - src/common/decorators/catch-errors.decorator.ts
+  - src/common/decorators/logger.decorator.ts
+  - src/common/exceptions/base.exception.ts
+  - src/common/exceptions/cli.exception.ts
+  - src/common/exceptions/module.exception.ts
+  - src/common/filters/cli-exception.filter.ts
+  - src/common/filters/global-exception.filter.ts
+  - src/common/io/file-manager.service.ts
+  - src/common/io/stream-processor.ts
+  - src/common/logger/logger.config.ts
+  - src/common/logger/logger.service.ts
+  - src/common/logger/formatters/cli.formatter.ts
+  - src/common/logger/formatters/json.formatter.ts
+  - src/common/logger/transports/console.transport.ts
+  - src/common/logger/transports/file.transport.ts
+  - src/common/security/command-security.service.ts
+  - src/common/security/data-masking.service.ts
+  - src/common/security/path-security.middleware.ts
+  - src/common/security/path-security.service.ts
+  - src/common/security/secret-manager.service.ts
+  - src/common/security/secure-command.executor.ts
+  - src/common/security/secure-file.service.ts
+  - src/common/security/security.config.ts
+  - src/common/security/sensitive-data.service.ts
+  - src/common/types/error.types.ts
+  - src/common/utils/error-handler.ts
+  - src/common/validation/validation.service.ts
+  - src/common/validation/decorators/validate.decorator.ts
+  - src/common/validation/validators/custom.validator.ts
+  - src/common/validation/validators/number.validator.ts
+  - src/common/validation/validators/path.validator.ts
+  - src/common/validation/validators/string.validator.ts
+  - src/config/config.service.ts
+  - src/core/module-loader/module-loader.service.ts
+  - src/modules/modules.service.ts
+  - src/performance/performance-monitor.ts
+  - src/performance/startup-optimizer.ts
+
+⚠️  有 61 个文件没有函数测试覆盖

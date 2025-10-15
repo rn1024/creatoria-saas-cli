@@ -1,0 +1,31 @@
+import { OnModuleInit } from '@nestjs/common';
+import { ApiDocGenerator } from './api/api-doc.generator';
+import { SwaggerConfigService } from './api/swagger.config';
+import { DocumentFormat } from './interfaces/doc.interface';
+export declare class DocumentationService implements OnModuleInit {
+    private readonly apiDocGenerator;
+    private readonly swaggerConfig;
+    private readonly options;
+    private documentation;
+    private docsPath;
+    constructor(apiDocGenerator: ApiDocGenerator, swaggerConfig: SwaggerConfigService, options: any);
+    onModuleInit(): Promise<void>;
+    generateAllDocumentation(): Promise<void>;
+    generateApiDocumentation(): Promise<void>;
+    exportDocumentation(format: DocumentFormat): Promise<string>;
+    private generateHtmlDocumentation;
+    private generateEndpointNav;
+    private generateEndpointDocs;
+    private generateParametersDocs;
+    private generateResponsesDocs;
+    private getEndpointId;
+    private generateMarkdownDocumentation;
+    private generatePostmanCollection;
+    private generateOpenApiSpec;
+    private generateOpenApiPaths;
+    private generateOpenApiResponses;
+    private generateOpenApiSchemas;
+    private generateUserGuide;
+    private generateDeveloperGuide;
+    private generateConfigReference;
+}
