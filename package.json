@@ -1,6 +1,6 @@
 {
   "name": "@creatoria/cli",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A powerful CLI for building enterprise-grade SaaS applications",
   "author": "Creatoria Team",
   "private": false,
