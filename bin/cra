@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-require('../dist/src/main');
+require('../dist/index.js');
 
