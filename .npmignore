@@ -1,0 +1,42 @@
+# Source code
+src/
+test/
+tests/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Configuration files
+.env
+.env.*
+.eslintrc.js
+.prettierrc
+tsconfig.json
+tsconfig.build.json
+nest-cli.json
+
+# Development files
+coverage/
+.nyc_output/
+*.log
+*.tsbuildinfo
+
+# Git
+.git/
+.gitignore
+.github/
+
+# Backup
+*-backup/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

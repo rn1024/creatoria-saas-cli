@@ -1,6 +1,7 @@
 import { DependencyManagerService } from '../services/dependency-manager.service';
 interface CreateOptions {
     skipInstall?: boolean;
+    path?: string;
     dbHost?: string;
     dbPort?: number;
     dbDatabase?: string;
@@ -32,5 +33,8 @@ export declare class CreateCommand {
     private writeEnv;
     private generateSecret;
     private performHealthCheck;
+    private isDevelopmentEnvironment;
+    private resolveTemplateDirectory;
+    private cloneTemplateFromGitHub;
 }
 export {};

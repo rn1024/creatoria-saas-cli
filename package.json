@@ -1,12 +1,30 @@
 {
-  "name": "creatoria-saas-cli",
+  "name": "@creatoria/cli",
   "version": "1.0.0",
-  "description": "Creatoria SaaS Platform CLI",
+  "description": "A powerful CLI for building enterprise-grade SaaS applications",
   "author": "Creatoria Team",
-  "private": true,
+  "private": false,
   "license": "MIT",
   "bin": {
-    "creatoria-saas": "./bin/creatoria-saas"
+    "cra": "./bin/cra"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rn1024/creatoria-saas-cli.git"
+  },
+  "keywords": [
+    "cli",
+    "saas",
+    "nestjs",
+    "scaffold",
+    "creatoria",
+    "typescript",
+    "enterprise",
+    "modular"
+  ],
+  "homepage": "https://github.com/rn1024/creatoria-saas-cli#readme",
+  "bugs": {
+    "url": "https://github.com/rn1024/creatoria-saas-cli/issues"
   },
   "scripts": {
     "build": "nest build",
@@ -20,7 +38,7 @@
     "module:list": "npm run cli module list",
     "db:migrate": "npm run cli db migrate",
     "db:seed": "npm run cli db seed",
-    "docker:build": "docker build -t creatoria-saas-cli .",
+    "docker:build": "docker build -t creatoria-cli .",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f",
@@ -35,7 +53,8 @@
     "test:all": "jest --coverage --verbose",
     "test:coverage": "jest --coverage && npm run coverage:report",
     "coverage:report": "node scripts/coverage-report.js",
-    "coverage:open": "open coverage/lcov-report/index.html"
+    "coverage:open": "open coverage/lcov-report/index.html",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@nestjs/bull": "^11.0.3",

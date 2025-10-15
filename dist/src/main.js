@@ -31,6 +31,10 @@ async function bootstrap() {
                     opts.skipInstall = true;
                 if (a === '--skip-docker')
                     opts.skipDocker = true;
+                if (a === '--path' && next) {
+                    opts.path = next;
+                    i++;
+                }
                 if (a === '--package-manager' && next) {
                     opts.packageManager = next;
                     i++;

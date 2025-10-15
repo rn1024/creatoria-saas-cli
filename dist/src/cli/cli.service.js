@@ -124,6 +124,7 @@ let CliService = class CliService {
         this.program
             .command('create <name>')
             .description('Create a new project from the Creatoria template')
+            .option('--path <path>', 'Directory where the project will be created')
             .option('--skip-install', 'Skip running npm install')
             .option('--skip-docker', 'Skip starting Docker services')
             .option('--package-manager <manager>', 'Package manager to use (npm, yarn, pnpm)', 'pnpm')
@@ -151,6 +152,7 @@ let CliService = class CliService {
             await this.createCommand.run([
                 name,
             ], {
+                path: opts.path,
                 skipInstall: !!opts.skipInstall,
                 skipDocker: !!opts.skipDocker,
                 packageManager: opts.packageManager,

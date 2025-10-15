@@ -77,26 +77,9 @@ export class CreateCommand {
     // Ensure target directory
     fs.ensureDirSync(targetDir);
 
-    // Resolve template directory (assume sibling repo path by default)
-    // Users can adjust this logic later; tests mock fs.copySync so source isn't asserted
-    const candidates = [
-      process.env.CREATORIA_TEMPLATE_DIR,
-      // Primary template location
-      '/Users/samuelcn/Documents/Project/creatoria/creatoria-saas-template',
-      // monorepo layout: repoRoot/creatoria-saas-template
-      path.resolve(__dirname, '../../../creatoria-saas-template'),
-      // running from repo root
-      path.resolve(process.cwd(), 'creatoria-saas-template'),
-      // running from cli dir
-      path.resolve(process.cwd(), '..', 'creatoria-saas-template'),
-    ].filter(Boolean) as string[];
-
-    const templateDir = candidates.find((p) => fs.existsSync(p));
-    if (!templateDir) {
-      throw new Error('Cannot locate creatoria-saas-template directory. Set CREATORIA_TEMPLATE_DIR to the template path.');
-    }
-    
-    console.log(`Using template from: ${templateDir}`);
+    // Resolve template directory with smart environment detection
+    const templateDir = await this.resolveTemplateDirectory();
+    console.log(`✓ Using template from: ${templateDir}`);
 
     // Copy all template files
     fs.copySync(templateDir, targetDir, { overwrite: true, errorOnExist: false });
@@ -277,6 +260,110 @@ export class CreateCommand {
       console.log(`\nAPI Documentation: http://localhost:${options.appPort || 3000}/api-docs`);
     } else {
       console.warn('\n⚠️ Some files are missing. Please check the project structure.');
+    }
+  }
+
+  /**
+   * Check if running in development environment
+   */
+  private isDevelopmentEnvironment(): boolean {
+    // Check NODE_ENV
+    if (process.env.NODE_ENV === 'development') {
+      return true;
+    }
+
+    // Check if src/ directory exists (indicates running from source)
+    const srcDir = path.resolve(__dirname, '../../src');
+    if (fs.existsSync(srcDir)) {
+      return true;
+    }
+
+    // Check if package.json is nearby (indicates local development)
+    const pkgPath = path.resolve(__dirname, '../../../package.json');
+    if (fs.existsSync(pkgPath)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Resolve template directory with smart environment detection
+   * - Development: Try local paths first
+   * - Production: Clone from GitHub directly
+   */
+  private async resolveTemplateDirectory(): Promise<string> {
+    // 1. Highest priority: Environment variable
+    if (process.env.CREATORIA_TEMPLATE_DIR) {
+      const templateDir = process.env.CREATORIA_TEMPLATE_DIR;
+      if (fs.existsSync(templateDir)) {
+        console.log(`Using template from environment variable: ${templateDir}`);
+        return templateDir;
+      } else {
+        throw new Error(`CREATORIA_TEMPLATE_DIR is set but directory does not exist: ${templateDir}`);
+      }
+    }
+
+    // 2. Check environment
+    const isDev = this.isDevelopmentEnvironment();
+
+    if (isDev) {
+      // Development environment: Try local paths
+      console.log('Development environment detected, checking local template paths...');
+
+      const localCandidates = [
+        '/Users/samuelcn/Documents/Project/creatoria/creatoria-saas-template',
+        path.resolve(__dirname, '../../../creatoria-saas-template'),
+        path.resolve(process.cwd(), 'creatoria-saas-template'),
+        path.resolve(process.cwd(), '..', 'creatoria-saas-template'),
+      ];
+
+      const templateDir = localCandidates.find((p) => fs.existsSync(p));
+
+      if (templateDir) {
+        console.log(`Found local template: ${templateDir}`);
+        return templateDir;
+      } else {
+        throw new Error(
+          'Development environment detected but local template not found.\n' +
+          'Please either:\n' +
+          '  1. Set CREATORIA_TEMPLATE_DIR environment variable to the template path\n' +
+          '  2. Ensure creatoria-saas-template is accessible in one of these locations:\n' +
+          localCandidates.map(p => `     - ${p}`).join('\n')
+        );
+      }
+    } else {
+      // Production environment: Clone from GitHub directly
+      console.log('Production environment detected, cloning template from GitHub...');
+      return await this.cloneTemplateFromGitHub();
+    }
+  }
+
+  /**
+   * Clone template from GitHub repository
+   */
+  private async cloneTemplateFromGitHub(): Promise<string> {
+    const simpleGit = require('simple-git');
+    const os = require('os');
+    const git = simpleGit.default();
+
+    const templateRepo = 'github:rn1024/creatoria-saas-template';
+    const [protocol, repo] = templateRepo.split(':');
+
+    if (protocol !== 'github') {
+      throw new Error('Only GitHub template source is supported');
+    }
+
+    const gitUrl = `https://github.com/${repo}.git`;
+    const tempDir = path.join(os.tmpdir(), 'creatoria-template', Date.now().toString());
+
+    try {
+      console.log(`Cloning template from ${gitUrl}...`);
+      await git.clone(gitUrl, tempDir, ['--depth', '1']);
+      console.log('✓ Template cloned successfully');
+      return tempDir;
+    } catch (error) {
+      throw new Error(`Failed to clone template from GitHub: ${error.message}`);
     }
   }
 }

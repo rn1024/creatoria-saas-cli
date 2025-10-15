@@ -17,8 +17,11 @@ const create_command_1 = require("./commands/create.command");
 const init_command_1 = require("./commands/init.command");
 const server_command_1 = require("./commands/server.command");
 const docker_command_1 = require("./commands/docker.command");
+const dev_command_1 = require("./commands/dev.command");
 const config_module_1 = require("../config/config.module");
 const dependency_manager_service_1 = require("./services/dependency-manager.service");
+const hot_reload_service_1 = require("./services/hot-reload.service");
+const dynamic_module_loader_service_1 = require("./services/dynamic-module-loader.service");
 let CliModule = class CliModule {
 };
 exports.CliModule = CliModule;
@@ -35,7 +38,10 @@ exports.CliModule = CliModule = __decorate([
             init_command_1.InitCommand,
             server_command_1.ServerCommand,
             docker_command_1.DockerCommand,
+            dev_command_1.DevCommand,
             dependency_manager_service_1.DependencyManagerService,
+            hot_reload_service_1.HotReloadService,
+            dynamic_module_loader_service_1.DynamicModuleLoaderService,
         ],
         exports: [cli_service_1.CliService],
     })

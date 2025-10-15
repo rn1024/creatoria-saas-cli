@@ -61,25 +61,26 @@ let CreateCommand = class CreateCommand {
         if (!projectName) {
             throw new Error('Project name is required');
         }
-        const targetDir = path.isAbsolute(projectName)
-            ? projectName
-            : path.join(process.cwd(), projectName);
+        let targetDir;
+        if (options.path) {
+            const basePath = path.isAbsolute(options.path)
+                ? options.path
+                : path.join(process.cwd(), options.path);
+            fs.ensureDirSync(basePath);
+            targetDir = path.join(basePath, projectName);
+        }
+        else if (path.isAbsolute(projectName)) {
+            targetDir = projectName;
+        }
+        else {
+            targetDir = path.join(process.cwd(), projectName);
+        }
         if (fs.existsSync(targetDir)) {
             throw new Error(`Directory ${projectName} already exists`);
         }
         fs.ensureDirSync(targetDir);
-        const candidates = [
-            process.env.CREATORIA_TEMPLATE_DIR,
-            '/Users/samuelcn/Documents/Project/creatoria/creatoria-saas-template',
-            path.resolve(__dirname, '../../../creatoria-saas-template'),
-            path.resolve(process.cwd(), 'creatoria-saas-template'),
-            path.resolve(process.cwd(), '..', 'creatoria-saas-template'),
-        ].filter(Boolean);
-        const templateDir = candidates.find((p) => fs.existsSync(p));
-        if (!templateDir) {
-            throw new Error('Cannot locate creatoria-saas-template directory. Set CREATORIA_TEMPLATE_DIR to the template path.');
-        }
-        console.log(`Using template from: ${templateDir}`);
+        const templateDir = await this.resolveTemplateDirectory();
+        console.log(`✓ Using template from: ${templateDir}`);
         fs.copySync(templateDir, targetDir, { overwrite: true, errorOnExist: false });
         console.log(`Copied template files to ${targetDir}`);
         const hasAppModuleHbs = fs.existsSync(path.join(targetDir, 'src', 'app.module.ts.hbs'));
@@ -224,6 +225,79 @@ let CreateCommand = class CreateCommand {
         }
         else {
             console.warn('\n⚠️ Some files are missing. Please check the project structure.');
+        }
+    }
+    isDevelopmentEnvironment() {
+        if (process.env.NODE_ENV === 'development') {
+            return true;
+        }
+        const srcDir = path.resolve(__dirname, '../../src');
+        if (fs.existsSync(srcDir)) {
+            return true;
+        }
+        const pkgPath = path.resolve(__dirname, '../../../package.json');
+        if (fs.existsSync(pkgPath)) {
+            return true;
+        }
+        return false;
+    }
+    async resolveTemplateDirectory() {
+        if (process.env.CREATORIA_TEMPLATE_DIR) {
+            const templateDir = process.env.CREATORIA_TEMPLATE_DIR;
+            if (fs.existsSync(templateDir)) {
+                console.log(`Using template from environment variable: ${templateDir}`);
+                return templateDir;
+            }
+            else {
+                throw new Error(`CREATORIA_TEMPLATE_DIR is set but directory does not exist: ${templateDir}`);
+            }
+        }
+        const isDev = this.isDevelopmentEnvironment();
+        if (isDev) {
+            console.log('Development environment detected, checking local template paths...');
+            const localCandidates = [
+                '/Users/samuelcn/Documents/Project/creatoria/creatoria-saas-template',
+                path.resolve(__dirname, '../../../creatoria-saas-template'),
+                path.resolve(process.cwd(), 'creatoria-saas-template'),
+                path.resolve(process.cwd(), '..', 'creatoria-saas-template'),
+            ];
+            const templateDir = localCandidates.find((p) => fs.existsSync(p));
+            if (templateDir) {
+                console.log(`Found local template: ${templateDir}`);
+                return templateDir;
+            }
+            else {
+                throw new Error('Development environment detected but local template not found.\n' +
+                    'Please either:\n' +
+                    '  1. Set CREATORIA_TEMPLATE_DIR environment variable to the template path\n' +
+                    '  2. Ensure creatoria-saas-template is accessible in one of these locations:\n' +
+                    localCandidates.map(p => `     - ${p}`).join('\n'));
+            }
+        }
+        else {
+            console.log('Production environment detected, cloning template from GitHub...');
+            return await this.cloneTemplateFromGitHub();
+        }
+    }
+    async cloneTemplateFromGitHub() {
+        const simpleGit = require('simple-git');
+        const os = require('os');
+        const git = simpleGit.default();
+        const templateRepo = 'github:rn1024/creatoria-saas-template';
+        const [protocol, repo] = templateRepo.split(':');
+        if (protocol !== 'github') {
+            throw new Error('Only GitHub template source is supported');
+        }
+        const gitUrl = `https://github.com/${repo}.git`;
+        const tempDir = path.join(os.tmpdir(), 'creatoria-template', Date.now().toString());
+        try {
+            console.log(`Cloning template from ${gitUrl}...`);
+            await git.clone(gitUrl, tempDir, ['--depth', '1']);
+            console.log('✓ Template cloned successfully');
+            return tempDir;
+        }
+        catch (error) {
+            throw new Error(`Failed to clone template from GitHub: ${error.message}`);
         }
     }
 };
